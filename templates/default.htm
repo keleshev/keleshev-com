@@ -1,0 +1,98 @@
+{% extends "_base.htm" %}
+{% block bodycontent %}  
+
+{% if authorize %} 
+    <span id="authorized_controls">
+        <a id="edit" class="hidden" href="edit/{{ CP.key.id }}">edit page</a> 
+        <a id="logout" class="hidden" href="logout">logout</a> 
+    </span>
+{% endif %}
+
+<div class="block" id="block-L2-menu"><ul>
+    {% for p2 in L2 %}
+        {% if p2.reference.key == CP.key or CP.key == p2.key or CP.reference.key == p2.reference.key or CP.reference.key == p2.key or CP.reference.reference.key == p2.reference.key  %}
+            <li>
+                <span {% if p2.hidden %}class="hidden"{% endif %}>
+                    {% if CP.key == p2.key %}
+                        <span id="selected">{{ p2.title }}</span>
+                    {% else %}
+                        {% if p2.content == '' %}
+                            {{ p2.title }}
+                            {% if authorize %}
+                                <a href="{{ p2.key.id }}">➨</a>
+                            {% endif %}
+                        {% else %}
+                        <a href="{{ p2.key.id }}">{{ p2.title }}</a>{% endif %}
+                    {% endif %}
+                </span>
+            </li>    
+            {% for p3 in L3 %}
+                {% if p3.reference.key == p2.key or CP.reference.key == p2.key and p3.reference.key == p2.key or CP.key == p3.reference.key and p2.key == p3.reference.key %}
+                    <ul>
+                        <li>
+                            <span {% if p3.hidden %}class="hidden"{% endif %}>
+                                {% if CP.key == p3.key %}
+                                    <span id="selected">{{ p3.title }}</span>
+                                {% else %}
+                                    {% if p3.content == '' %}
+                                        {{ p3.title }}
+                                        {% if authorize %}
+                                            <a href="{{ p3.key.id }}">➨</a>
+                                        {% endif %}
+                                    {% else %}
+                                    <a href="{{ p3.key.id }}">{{ p3.title }}</a>{% endif %}
+                                {% endif %}
+                            </span>
+                        </li>
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</ul></div>
+
+<hr/>
+
+{% block content %}
+
+<div class="block" id="block-content">
+    <!--{# if CP.key == L0.key #}!!!{# else #}<h2>{{ CP.title }}</h2>{# endif #}-->
+    
+    {% load custom_tags %}
+    {{ CP.content|fix_ampersands|custom_youtube|custom_googledocs }}
+    
+    
+</div>
+{% endblock %}
+
+{% if CP.allow_comments %}
+<hr/>
+
+<div class="block" id="block-comments">
+
+    <h2>Comments ({{ CP.number_of_comments }})</h2>
+    {% for c in COMM %}
+        
+        {% ifequal CP.key c.reference.key %}
+            <span id="user">{{ c.user|escape }}</span> 
+            <span id="date">
+                 <!--[{{ c.created|date:"H:i - j.m.Y" }}]-->
+                 posted {{ c.created|timesince }} ago:
+            </span>
+            {% if c.registered %}<div id="comment-registered">{% else %}<div id="comment">{% endif %}    
+            <pre>{{ c.content }}</pre></div>
+            <br/>
+        {% endifequal %}
+    {% endfor %}
+    <form id="comment-form" method="get" action="/post-comment/{{ CP.key.id }}">
+    
+        <input onClick="if (this.value=='Your name...'){this.value=''}" id="user-name-input" type="text" name="user" value="{% if authorize %}Vladimir Keleshev{% else %}Your name...{% endif %}"/>
+        <input  id="post-comment" type="submit" value="JavaScript should be ON to post" disabled="disabled"/> <br/>
+        <textarea name="content" rows="4" cols="50"></textarea><br/>
+        <br/>
+    </form>
+
+</div>
+
+{% endif %}
+{% endblock %}

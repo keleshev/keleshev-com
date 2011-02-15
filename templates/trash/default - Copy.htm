@@ -1,0 +1,68 @@
+{% extends "_base.htm" %}
+{% block bodycontent %}  
+
+
+
+<div class="block" id="block-L1-menu"><ul>
+    {% for p1 in L1 %}{% for p2 in L2 %}
+        {% if p1.key == p2.reference.key %}
+            {% if CP.key == p1.key or CP.key == p2.key or CP.reference.key == p1.key or CP.reference.key == p2.key %}
+            {# if p2.reference.key == p1.key and CP.reference.key ==  #}
+                <li><span {% if p2.hidden %}class="hidden"{% endif %}>{% ifequal CP.key p2.key %}{{ p2.title }}{% else %}<a href="{{ p2.key.id }}">{{ p2.title }}{% endifequal %}</a></span>   
+                    {% for p3 in L3 %}
+                        {% if p2.key == p3.reference.key %}
+                            {% if CP.key == p2.key or CP.reference.key == p2.key %}
+                                <ul><li><span {% if p3.hidden %}class="hidden"{% endif %}>{% ifequal CP.key p3.key %}{{ p3.title }}{% else %}<a href="{{ p3.key.id }}">{{ p3.title }}{% endifequal %}</a></span>   
+                                </ul>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endfor %}{% endfor %}
+</ul></div>
+
+<hr/>
+
+{% block content %}
+
+<div class="block" id="block-content">
+    <h2>{{ CP.title }}
+    {% if authorize %} <a id="edit" href="edit/{{ CP.key.id }}">edit page</a><br/> {% endif %}
+    </h2>
+    {% load custom_tags %}
+    {{ CP.content|fix_ampersands|custom_youtube|custom_googledocs }}
+    
+    <br><br>
+</div>
+{% endblock %}
+
+{% if CP.allow_comments %}
+<hr/>
+
+<div class="block" id="block-comments">
+
+    <h2>Comments ({{ L0.number_of_comments }})</h2>
+    {% for c in COMM %}
+        
+        {% ifequal CP.key c.reference.key %}
+            <span id="user">{{ c.user|escape }}</span> 
+            <span id="date">{{ c.created|date:"H:i - j.m.Y" }}</span>
+            {% if c.registered %}<div id="comment-registered">{% else %}<div id="comment">{% endif %}    
+            <pre>{{ c.content }}</pre></div>
+            <br/>
+        {% endifequal %}
+    {% endfor %}
+    <form id="comment-form" method="get" action="/post-comment/{{ CP.key.id }}">
+    
+        <input onClick="if (this.value=='Your Name...'){this.value=''}" id="user-name-input" type="text" name="user" size="20" value="{% if authorize %}Vladimir Keleshev{% else %}Your Name...{% endif %}"/>
+        <input id="post-comment" type="submit" value="JavaScript should be ON to post" disabled="disabled"/> <br/>
+        <textarea name="content" rows="4" cols="50"></textarea><br/>
+        <br/>
+    </form>
+
+</div>
+
+{% endif %}
+{% endblock %}

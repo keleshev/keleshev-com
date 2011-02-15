@@ -1,0 +1,94 @@
+{% autoescape off %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+        <meta name="google-site-verification" content="tKG6Y4SZ0kiwEveBa1iMi8R6p_IyHO4K_MFR8mde9oQ" />
+        <link href="/static/generic.css" rel="stylesheet" type="text/css" />
+        <link href="/static/specific.css" rel="stylesheet" type="text/css" />
+        <title>{{ portal_name }} - {{ CP.title }}</title>
+    </head>
+<body onload="document.getElementById('post-comment').disabled=false; document.getElementById('post-comment').value='Post!'; document.getElementById('comment-form').method='post';">
+
+
+
+<div class="block" id="block-logo">
+    <!--a href="/"><img src="/static/logo.png"/></a-->
+</div>
+
+<hr/>
+
+<div class="block" id="block-L1-menu">
+        
+        <!--span id="title">Vladimir Keleshev</span-->     
+        <span id="L1-menu">
+        {% ifequal CP.key L0.key %} <span class="L1-menu-item" id="L1-selected">{{ L0.title }}</span> {% else %} <span class="L1-menu-item"><a href="/">{{ L0.title }}</a></span> {% endifequal %}
+        {% for p1 in L1 %}
+            {% if CP.key == p1.key %} 
+                    <span class="L1-menu-item" id="L1-selected"><span {% if p1.hidden %}class="hidden"{% endif %}>{{ p1.title }}</span></span>
+                {# endif #}
+            {% else %} 
+                {% if CP.reference.key == p1.key or CP.reference.reference.key == p1.key %}
+                    <span class="L1-menu-item" id="L1-selected"><a {% if p1.hidden %}class="hidden"{% endif %} href="{{ p1.key.id }}">{{ p1.title }}</a></span>  
+                {% else %}
+                    <span class="L1-menu-item"><a {% if p1.hidden %}class="hidden"{% endif %} href="{{ p1.key.id }}">{{ p1.title }}</a></span>  
+                {% endif %}
+            {% endif %}
+        {% endfor %} 
+        
+        
+        </span>
+        
+</div>
+
+<hr/>
+
+{% block bodycontent %}
+
+{% endblock %}
+
+<hr/>
+
+<div class="block" id="block-footer">
+    <!--a id="footer" href="mailto:vladimir@keleshev.com">vladimir@keleshev.com</a>
+    <img src="/static/footer.png"/-->
+    {% ifnotequal error None %}<p>{{ error }}</p>{% endifnotequal %}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Yandex.Metrika -->
+<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript"></script>
+<div style="display:none;"><script type="text/javascript">
+try { var yaCounter853439 = new Ya.Metrika(853439);
+yaCounter853439.clickmap();
+yaCounter853439.trackLinks({external: true});
+} catch(e){}
+</script></div>
+<noscript><div style="position:absolute"><img src="//mc.yandex.ru/watch/853439" alt="" /></div></noscript>
+<!-- /Yandex.Metrika -->
+<!-- Google.Analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15242420-1");
+pageTracker._setDomainName(".keleshev.com");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- /Google.Analytics -->
+</body>
+</html>
+{% endautoescape %}

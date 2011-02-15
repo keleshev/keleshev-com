@@ -1,0 +1,137 @@
+body {
+    background: #eeeeee; ffffd2;/*#e9e9ff;*/
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#ffffff));
+    background-image: -moz-linear-gradient(top,  #eeeeee,  #ffffff);
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+    1background:#ffffff;
+}
+
+/* Main */
+
+#block-logo {
+    display: none;
+}
+
+#L1-selected {
+    color: white;
+    background-color: #253eab;
+    padding: 0.15em 0.5em 0.25em 0.5em;
+    
+    -webkit-border-bottom-right-radius: 12px;
+    -webkit-border-bottom-left-radius: 12px;
+    -moz-border-radius-bottomright: 12px;
+    -moz-border-radius-bottomleft: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+
+    1-moz-box-shadow: 1px 1px 2px #444;
+    1-webkit-box-shadow: 1px 1px 1px #444;
+    1box-shadow: 1px 1px 1px #444;
+}
+
+#L1-selected a {
+    color: white;
+}
+
+#selected {
+    color:white;
+    margin-left:-0.5em;
+    padding: 0.15em 0.5em 0.15em 0.5em;
+    background-color: #253eab;
+    
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    
+    1-moz-box-shadow: 1px 1px 4px #444;
+    1-webkit-box-shadow: 1px 1px 4px #444;
+    1box-shadow: 1px 1px 4px #444;
+}
+
+#selected a {
+    color: white;
+}
+
+#block-L2-menu {
+    margin-top: 1.5em;
+}
+
+#block-content {
+    margin-top: 0em;
+}
+
+#block-footer {  
+    display:none;
+}
+
+/* Other */
+    
+.youtube-frame {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    
+    -moz-box-shadow: 0px 0px 3px #444;
+    -webkit-box-shadow: 0px 0px 3px #444;
+    box-shadow: 0px 0px 3px #444;
+}
+
+
+table {
+    background: White; 
+    border-style:none;
+    border-collapse:collapse;
+
+    -moz-box-shadow: 0px 0px 2px #444;
+    -webkit-box-shadow: 0px 0px 2px #444;
+    box-shadow: 0px 0px 2px #444;
+}
+    
+td, tr {     
+    padding:0.5em 1em;
+    border: 1px solid #abc;
+    border-bottom: 1px solid #cba;
+}
+
+hr {
+    display:none;
+}
+
+
+hr.blog-post-separators {
+    display:block;
+    border: solod 1px #cba;
+    margin: 0.5em 0;
+    height: 2px;
+}
+
+.paper {
+    background:White; 
+    padding:4em;
+    border: 1px solid #cba;
+    
+    -moz-box-shadow: 0px 0px 2px #444;
+    -webkit-box-shadow: 0px 0px 2px #444;
+    box-shadow: 0px 0px 2px #444;
+}    
+    
+.negated {
+    border-top: 2px solid;
+}
+
+.negated2 {
+    border-top: 6px double;
+}
+
+ul {
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+    
+    
+    
+    
+    
+    
+    
+    

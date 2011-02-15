@@ -1,0 +1,47 @@
+{% extends "_base.htm" %}
+{% block bodycontent %}  
+
+{% load custom_tags %}
+
+{% for p1 in L1 %}{% for p2 in L2 reversed %}  
+    {% ifequal p1.key p2.reference.key %}
+        {% ifequal CP.key p1.key %}
+            <div class="block" id="block-content">
+                <hr class="blog-post-separators" />
+                
+                {% if "<!--cut-->" in p2.content %}
+                    <h2>
+                    <span><a {% if p2.hidden %}class="hidden"{% endif %} href="{{ p2.key.id }}">{{ p2.title }}</a></span>
+                    {% if authorize %}<a id="edit" href="edit/{{ p2.key.id }}">edit page</a>{% endif %}
+                    <span id="date">{{ p2.created|date:"j.m.Y" }}</span>
+                    </h2>
+                    {{ p2.content|custom_cut:"<!--cut-->" }}
+                    
+                    <a href="{{ p2.key.id }}">Read more »</a>
+                {% else %}
+                    <h2>
+                    {{ p2.title }}
+                    {% if authorize %}<a id="edit" href="edit/{{ p2.key.id }}">edit page</a>{% endif %}
+                    <span id="date">{{ p2.created|date:"j.m.Y" }}</span>
+                    </h2>
+                    
+                    {{ p2.content }}
+                {% endif %}
+                
+                {% if p2.allow_comments %}
+                    <br><br><a href="{{ p2.key.id }}">Comments ({{ p2.number_of_comments }})</a><br/><br/>
+                {% endif %}  
+                
+            </div>
+            <hr/>
+        {% endifequal %}
+        {% ifequal CP.reference.key p1.key %}
+            <div id="container"><div id="content"><h2>{{ p2.title }}{% if authorize %}<a id="edit" href="edit/{{ p2.key.id }}">edit page</a>{% endif %}</h2>{{ p2.content }}</div></div>
+        {% endifequal %}
+    {% endifequal %}
+{% endfor %}{% endfor %}
+
+
+
+      
+{% endblock %}

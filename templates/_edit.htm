@@ -1,0 +1,76 @@
+{% extends "_base.htm" %}
+{% block bodycontent %}
+
+
+
+<div class="block" id="block-content">
+    <form method="post" action="/edit/{{ CP.key.id }}">
+        <input class="title" type="text" name="title" size="68" value="{{ CP.title }}"/> <br/>
+        <textarea name="content" rows="15" cols="85">{{ CP.content }}</textarea><br/>
+        
+    <center>
+        <label for="is_home">Is main page: </label>
+        
+            <input type="checkbox" name="is_home" id="is_home" {% if CP.is_home %}checked{% endif %} />
+        <br/>
+        Belongs to:
+        <select size="1" name="reference">
+            <option {% ifequal CP.reference.key '' %} selected {% endifequal %} value=""> </option>
+            <option {% ifequal CP.reference.key L0.key %} selected {% endifequal %} value="{{ L0.key.id }}">{{ L0.title }} (main page)</option>
+            {% for p1 in L1 %}  
+                <option {% ifequal CP.reference.key p1.key %} selected {% endifequal %} value="{{ p1.key.id }}">&nbsp;&nbsp;&nbsp;&nbsp;{{ p1.title }}</option>
+                {% for p2 in L2 %}  
+                    {% ifequal p1.key p2.reference.key %}
+                        <option {% ifequal CP.reference.key p2.key %} selected {% endifequal %} value="{{ p2.key.id }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ p2.title }}</option>
+                
+                    {% endifequal %}
+                {% endfor %}
+            {% endfor %}
+        </select><br/>
+    
+        Template: <input type="text" name="template" value="{{ CP.template }}"/><br/>
+        Position in menu: <input type="text" name="position" value="{{ CP.position }}"/> <br/>
+        <!--input type="radio" name="type" value="HTML" checked /> HTML <input type="radio" name="type" value="Text"/> Text <br/><br/-->
+        
+        <label for="hidden">Hide this page: </label>
+        {% if CP.hidden %}
+            <input type="checkbox" name="hidden" id="hidden" checked />
+        {% else %}
+            <input type="checkbox" name="hidden" id="hidden" />
+        {% endif %}
+        
+<br>
+        <label for="allow_comments">Allow comments: </label> 
+        {% if CP.allow_comments %}
+            <input type="checkbox" name="comments" id="allow_comments" checked />
+        {% else %}
+            <input type="checkbox" name="comments" id="allow_comments" />
+        {% endif %}
+               
+        
+        
+        <br/>
+        <input style="padding:0.25em 1em;" type="submit" value="Apply changes"/> or 
+        <input type="submit" value="Delete this page" onclick="window.location='/delete/{{ CP.key.id }}'; return false;"/>
+        or
+        <input type="submit" value="Create new page" onclick="window.location='/create_page'; return false;"/>
+        
+        </center>
+        {# if authorize #} 
+        
+        <span id="authorized_controls">
+            <a id="edit" href="../{{ CP.key.id }}">↻ exit editing mode</a><br/>
+            <!--a id="edit" href="/create_page">create a new page</a><br/-->
+            <a id="logout" href="logout">logout</a><br/>
+    
+            
+        </span>
+        {# endif #}
+        <!--input type="submit" value="Cancel" onclick="window.location='/{{ CP.key.id }}'; return false;"/> or 
+        <input type="submit" value="Delete this page" onclick="window.location='/delete/{{ CP.key.id }}'; return false;"/>
+        <input type="submit" value="Create new page" onclick="window.location='/create_page'; return false;"/-->
+            
+    </form>
+</div></div>
+    
+{% endblock %}
