@@ -1,7 +1,6 @@
 import logging, os, Cookie, datetime, sys, hashlib
 
 # Google App Engine imports.
-#from google.appengine.ext.webapp import util
 import wsgiref.handlers
 from google.appengine.ext import webapp
 from google.appengine.ext import db
@@ -30,15 +29,11 @@ def get_home_id():
     try:
         return PageModel.gql("WHERE is_home=true")[0].key().id()
     except:
-        return 404
-    
-#1#33
+        return None
+    #render_page(handler,"_login.htm",{'error': 'No main page, <a href="/setup/">create main page</a>?'})
 
 def render_page(handler, template_name = 'default.htm', values = { }):
-    #try:
     output = render_to_string(template_name,values)
-    #except:
-        #output = render_to_string('default.htm',values)
     handler.response.out.write(output)
     
 class PageModel(db.Model):
@@ -52,9 +47,8 @@ class PageModel(db.Model):
     hidden = db.BooleanProperty()
     is_home = db.BooleanProperty()
     allow_comments = db.BooleanProperty()
-    comments_number = 0 #list()
-    # not yet used:
-    historical = db.BooleanProperty()
+    comments_number = 0 
+    #historical = db.BooleanProperty()
     #user = db.UserProperty(auto_current_user = True)    
     type = db.StringProperty()
     
@@ -66,7 +60,6 @@ class CommentModel(db.Model):
     registered = db.BooleanProperty()
     
 class AdminModel(db.Model):
-    #admin_name = db.TextProperty()
     login = db.TextProperty()
     password_sha1 = db.TextProperty()
 
@@ -98,17 +91,17 @@ def get_requested_page_id(handler):
             return page_id
     except:
         if s[len(s)-1:] == '/': # if last char is '/'
-            return get_home_id()
+            if None == get_home_id():
+                render_page(handler,"_login.htm",{'error': 'No main page, <a href="/setup/">create main page</a>?'})
+            else:
+                return get_home_id()
         
         all = PageModel.all()
         for page in all:
-            if '/'+page.title.replace(' ','-') in s: # check this later! 
+            if '/'+page.title.replace(' ','-') in s: # TODO title-addressable pages
                 return page.key().id() 
-    # else:
     render_page(handler,"_404.htm")
-    
-    # else
-    return None
+    #return None
 
 def get_appropriate_position(reference):
     try:
@@ -121,9 +114,10 @@ def get_appropriate_position(reference):
                 return position
     except:
         return 1
-        #return position+300 #39909 #error
 
+#
 # /setup/*
+#
 class SetupHandler(webapp.RequestHandler):
 
     def get(self):
@@ -135,49 +129,37 @@ class SetupHandler(webapp.RequestHandler):
                 new_admin.put()
                 render_page(self,"_login.htm",{'error': 'User '+login+' was created.'})
             else:
-                new_page = PageModel(
-                                    title = 'main page', 
+                new_page = PageModel(title = 'main page', 
                                     content = 'No content yet.',
-#PageModel.gql('WHERE reference=:home_id ORDER BY position ASC', home_id = PageModel.get_by_id(get_home_id()))[1].title,#'no content', 
                                     template = 'default.htm',
                                     position = 1,
                                     hidden=True, 
                                     allow_comments=False, 
-                                    #reference=PageModel.get_by_id(get_home_id()),
-                                    is_home=True
-                                    )
+                                    is_home=True)
                 new_page.put()
                 self.redirect('/edit/'+str(new_page.key().id()))
     
-      
-        
-
+#
 # /create_page
+#
 class CreateHandler(webapp.RequestHandler):
 
     def get(self):
         if authorize():
-#            max_position = PageModel.gql('WHERE reference=:home_id ORDER BY position DESC', home_id = PageModel.get_by_id(get_home_id()).key())[0].position
-#            for position in range(1,max_position+1):
-#                try:
-#                    PageModel.gql('WHERE reference=:home_id AND position=:position', home_id=PageModel.get_by_id(get_home_id()).key(), position=position)[0]
-#                except:
-#                    break
-            
-            new_page = PageModel(
-                                title = 'untitled', 
-                                content = 'No content yet.',#PageModel.gql('WHERE reference=:home_id ORDER BY position ASC', home_id = PageModel.get_by_id(get_home_id()))[1].title,#'no content', 
+            new_page = PageModel(title = 'untitled', 
+                                content = 'No content yet.',
                                 template = 'default.htm',
                                 position = get_appropriate_position(PageModel.get_by_id(get_home_id()).key()),
                                 hidden=True, 
                                 allow_comments=True, 
                                 reference=PageModel.get_by_id(get_home_id()),
-                                is_home=False
-                                )
+                                is_home=False)
             new_page.put()
             self.redirect('/edit/'+str(new_page.key().id()))
 
+#
 # /post-comment/.*
+#
 class CommentHandler(webapp.RequestHandler):
 
     def post(self):
@@ -196,14 +178,14 @@ class CommentHandler(webapp.RequestHandler):
             #set_cookie(self,'guest-name',COMM.user)
                 
             new_comment.reference = PageModel.get_by_id(page_id)
-            
             new_comment.registered = authorize()
-  
             new_comment.put()
             
         self.redirect('/'+str(page_id))
-            
+        
+#
 # /login
+#
 class LoginHandler(webapp.RequestHandler):
 
     def post(self):
@@ -224,15 +206,19 @@ class LoginHandler(webapp.RequestHandler):
         
     def get(self):   
         render_page(self,"_login.htm")
-        
+
+#
 # /logout
+#
 class LogoutHandler(webapp.RequestHandler):
 
     def get(self):   
         set_cookie(self,'session','bla-bla-bla')
         self.redirect('/')
 
+#
 # /delete/.*
+#
 class DeleteHandler(webapp.RequestHandler):
 
     def get(self):
@@ -245,7 +231,9 @@ class DeleteHandler(webapp.RequestHandler):
             db.delete(CP)
             self.redirect('/')
 
+#
 # /.*
+#
 class MainHandler(webapp.RequestHandler):
 
     def get(self):
@@ -274,10 +262,6 @@ class MainHandler(webapp.RequestHandler):
         L0.number_of_comments = CommentModel.gql(comment_query, reference = L0.key()).count()
         CP.number_of_comments = CommentModel.gql(comment_query, reference = CP.key()).count()
         
-        #if (L0.hidden == True) and (authorize() == False):
-            
-            
-        
         L1 = PageModel.gql(query, reference = L0.key())
         L2 = []
         #L2C = []
@@ -294,9 +278,11 @@ class MainHandler(webapp.RequestHandler):
         #COMM = CommentModel.
         
         render_page(self,CP.template,
-        {'CP':CP,'L0':L0,'L1':L1,'L2':L2,'L3':L3,'COMM':COMM,'authorize':authorize()})#, 'error':str(os.curdir)+'!'
+        {'CP':CP,'L0':L0,'L1':L1,'L2':L2,'L3':L3,'COMM':COMM,'authorize':authorize()})
 
+#
 # /edit/.*
+#
 class EditHandler(webapp.RequestHandler):
 
     def get(self):
@@ -312,7 +298,7 @@ class EditHandler(webapp.RequestHandler):
                 L2.extend(PageModel.gql("WHERE reference = :ref ORDER BY position", ref = L1[i].key()))
                        
             render_page(self,"_edit.htm",
-            {'CP':CP,'L0':L0, 'L1':L1, 'L2':L2, 'authorize':authorize()})#, 'edit_mode':edit_mode})edit_mode = True
+            {'CP':CP,'L0':L0, 'L1':L1, 'L2':L2, 'authorize':authorize()})
 
     def post(self):
         if authorize():
@@ -338,8 +324,7 @@ class EditHandler(webapp.RequestHandler):
                     page.position = get_appropriate_position(page_reference_new)
                 else:
                     page.position = int(self.request.get('position'))
-            
-            
+        
                 #CP.reference = PageModel.get_by_id(int(self.request.get('reference')))
             
             if self.request.get('is_home') == 'on':

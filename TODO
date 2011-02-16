@@ -1,0 +1,22 @@
+Suggestions:
+
+ - use Jinja instead of Django templates
+ 
+ - content managing:
+     - use markup instead of html (https://github.com/github/markup#readme)
+     - or integrate with Google Docs or something
+     - or integrate WYSIWYG editor
+ 
+ - implement history
+ 
+ - refactoring?
+ 
+ - 1 app - many instances?
+
+ - spam protection
+    - registration?
+    - openID?
+    - captcha?
+    - JS, cookies check?
+ 
+ - automatic tests?
