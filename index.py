@@ -38,6 +38,7 @@ def render_page(handler, template_name = 'default.htm', values = { }):
     
 class PageModel(db.Model):
     title = db.StringProperty()
+    url =  db.StringProperty()
     content = db.TextProperty()
     reference = db.SelfReferenceProperty()
     created = db.DateTimeProperty(auto_now_add = True)
@@ -130,6 +131,7 @@ class SetupHandler(webapp.RequestHandler):
                 render_page(self,"_login.htm",{'error': 'User '+login+' was created.'})
             else:
                 new_page = PageModel(title = 'main page', 
+                                    url = 'main',
                                     content = 'No content yet.',
                                     template = 'default.htm',
                                     position = 1,
@@ -147,6 +149,7 @@ class CreateHandler(webapp.RequestHandler):
     def get(self):
         if authorize():
             new_page = PageModel(title = 'untitled', 
+                                url = 'untitled',
                                 content = 'No content yet.',
                                 template = 'default.htm',
                                 position = get_appropriate_position(PageModel.get_by_id(get_home_id()).key()),
@@ -307,6 +310,7 @@ class EditHandler(webapp.RequestHandler):
             
             page = PageModel.get_by_id(int(page_id))
             page.title = self.request.get('title')
+            page.url = self.request.get('url') 
             page.content = self.request.get('content')
             page.type = self.request.get('type')
             #page.position = int(self.request.get('position'))

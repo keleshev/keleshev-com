@@ -1,13 +1,22 @@
 Suggestions:
-
- - use Jinja instead of Django templates
  
- - content managing:
-     - use markup instead of html (https://github.com/github/markup#readme)
-     - or integrate with Google Docs or something
-     - or integrate WYSIWYG editor
+ - use markdown for everything
  
- - implement history
+ - possible markdown extensions:
+    - Auto-embedding youtube videos
+    - handling 'papers'
+    - in-document indentations?
+    - handling tables?
+    - github flavored markdown?
+       - newlines
+       - multiple underscores in words
+       - url autolinking
+       - fenced code blocks
+       - syntax highlighting
+    - goal: be able to turn as much as possible html into markdown
+      
+ 
+ - implement history?
  
  - refactoring?
  
