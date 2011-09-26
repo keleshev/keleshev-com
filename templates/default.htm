@@ -3,7 +3,7 @@
 
 {% if authorize %} 
     <span id="authorized_controls">
-        <a id="edit" class="hidden" href="edit/{{ CP.key.id }}">edit page</a> 
+        <a id="edit" class="hidden" href="edit/{{ CP.url }}">edit page</a> 
         <a id="logout" class="hidden" href="logout">logout</a> 
     </span>
 {% endif %}
@@ -19,10 +19,10 @@
                         {% if p2.content == '' %}
                             {{ p2.title }}
                             {% if authorize %}
-                                <a href="{{ p2.key.id }}">➨</a>
+                                <a href="{{ p2.url }}">➨</a>
                             {% endif %}
                         {% else %}
-                        <a href="{{ p2.key.id }}">{{ p2.title }}</a>{% endif %}
+                        <a href="{{ p2.url }}">{{ p2.title }}</a>{% endif %}
                     {% endif %}
                 </span>
             </li>    
@@ -37,10 +37,10 @@
                                     {% if p3.content == '' %}
                                         {{ p3.title }}
                                         {% if authorize %}
-                                            <a href="{{ p3.key.id }}">➨</a>
+                                            <a href="{{ p3.url }}">➨</a>
                                         {% endif %}
                                     {% else %}
-                                    <a href="{{ p3.key.id }}">{{ p3.title }}</a>{% endif %}
+                                    <a href="{{ p3.url }}">{{ p3.title }}</a>{% endif %}
                                 {% endif %}
                             </span>
                         </li>
@@ -84,7 +84,7 @@
             <br/>
         {% endifequal %}
     {% endfor %}
-    <form id="comment-form" method="get" action="/post-comment/{{ CP.key.id }}">
+    <form id="comment-form" method="get" action="/post-comment/{{ CP.url }}">
     
         <input onClick="if (this.value=='Your name...'){this.value=''}" id="user-name-input" type="text" name="user" value="{% if authorize %}Vladimir Keleshev{% else %}Your name...{% endif %}"/>
         <input  id="post-comment" type="submit" value="JavaScript should be ON to post" disabled="disabled"/> <br/>

@@ -344,7 +344,7 @@ class EditHandler(webapp.RequestHandler):
                 page.allow_comments = False
             
             page.put()
-            self.redirect('/'+str(page.key().id()))
+            self.redirect('/'+str(page.url))
 
 def main():
     application = webapp.WSGIApplication([

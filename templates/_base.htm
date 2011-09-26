@@ -29,9 +29,9 @@
                 {# endif #}
             {% else %} 
                 {% if CP.reference.key == p1.key or CP.reference.reference.key == p1.key %}
-                    <span class="L1-menu-item" id="L1-selected"><a {% if p1.hidden %}class="hidden"{% endif %} href="{{ p1.key.id }}">{{ p1.title }}</a></span>  
+                    <span class="L1-menu-item" id="L1-selected"><a {% if p1.hidden %}class="hidden"{% endif %} href="{{ p1.url }}">{{ p1.title }}</a></span>  
                 {% else %}
-                    <span class="L1-menu-item"><a {% if p1.hidden %}class="hidden"{% endif %} href="{{ p1.key.id }}">{{ p1.title }}</a></span>  
+                    <span class="L1-menu-item"><a {% if p1.hidden %}class="hidden"{% endif %} href="{{ p1.url }}">{{ p1.title }}</a></span>  
                 {% endif %}
             {% endif %}
         {% endfor %} 

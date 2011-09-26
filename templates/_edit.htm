@@ -4,7 +4,7 @@
 
 
 <div class="block" id="block-content">
-    <form method="post" action="/edit/{{ CP.key.id }}">
+    <form method="post" action="/edit/{{ CP.url }}">
         <input class="title" type="text" name="title" size="68" value="{{ CP.title }}"/> <br/>
         <input type="text" name="url" size="68" value="{{ CP.url }}"/> <br/>
         <textarea name="content" rows="15" cols="85">{{ CP.content }}</textarea><br/>
@@ -52,7 +52,7 @@
         
         <br/>
         <input style="padding:0.25em 1em;" type="submit" value="Apply changes"/> or 
-        <input type="submit" value="Delete this page" onclick="window.location='/delete/{{ CP.key.id }}'; return false;"/>
+        <input type="submit" value="Delete this page" onclick="window.location='/delete/{{ CP.url }}'; return false;"/>
         or
         <input type="submit" value="Create new page" onclick="window.location='/create_page'; return false;"/>
         
@@ -60,15 +60,15 @@
         {# if authorize #} 
         
         <span id="authorized_controls">
-            <a id="edit" href="../{{ CP.key.id }}">↻ exit editing mode</a><br/>
+            <a id="edit" href="../{{ CP.url }}">↻ exit editing mode</a><br/>
             <!--a id="edit" href="/create_page">create a new page</a><br/-->
             <a id="logout" href="logout">logout</a><br/>
     
             
         </span>
         {# endif #}
-        <!--input type="submit" value="Cancel" onclick="window.location='/{{ CP.key.id }}'; return false;"/> or 
-        <input type="submit" value="Delete this page" onclick="window.location='/delete/{{ CP.key.id }}'; return false;"/>
+        <!--input type="submit" value="Cancel" onclick="window.location='/{{ CP.url }}'; return false;"/> or 
+        <input type="submit" value="Delete this page" onclick="window.location='/delete/{{ CP.url }}'; return false;"/>
         <input type="submit" value="Create new page" onclick="window.location='/create_page'; return false;"/-->
             
     </form>
