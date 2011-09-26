@@ -1,4 +1,4 @@
-import logging, os, Cookie, datetime, sys, hashlib
+import os, Cookie, sys, hashlib
 
 # Google App Engine imports.
 import wsgiref.handlers
@@ -29,8 +29,8 @@ def get_home_id():
     try:
         return PageModel.gql("WHERE is_home=true")[0].key().id()
     except:
-        return None
-    #render_page(handler,"_login.htm",{'error': 'No main page, <a href="/setup/">create main page</a>?'})
+        #return None
+        render_page(handler,"_login.htm",{'error': 'No main page, <a href="/setup/">create main page</a>?'})
 
 def render_page(handler, template_name = 'default.htm', values = { }):
     output = render_to_string(template_name,values)
@@ -86,23 +86,20 @@ def authorize():
 
 def get_requested_page_id(handler):
     s = handler.request.path
+    if s.endswith('/'): 
+        return get_home_id()
+    last = s.split('/')[-1]
+    if last.isdigit():
+        try:
+            return PageModel.get_by_id(int(last)).key().id()
+        except AttributeError: # no such id in db
+            pass
     try:
-        page_id = int(s[s.rfind('/',0)+1:]) # if s=='/123' or '/smth/123' returns 123
-        if PageModel.get_by_id(page_id):
-            return page_id
-    except:
-        if s[len(s)-1:] == '/': # if last char is '/'
-            if None == get_home_id():
-                render_page(handler,"_login.htm",{'error': 'No main page, <a href="/setup/">create main page</a>?'})
-            else:
-                return get_home_id()
-        
-        all = PageModel.all()
-        for page in all:
-            if '/'+page.title.replace(' ','-') in s: # TODO title-addressable pages
-                return page.key().id() 
-    render_page(handler,"_404.htm")
-    #return None
+        id = PageModel.all().filter('url =', last).fetch(limit=1)[0].key().id()
+        return id
+    except IndexError: # no such url in db
+        render_page(handler, '_404.htm')
+        #return None
 
 def get_appropriate_position(reference):
     try:
