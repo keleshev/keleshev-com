@@ -25,7 +25,7 @@ TEMPLATE_DIR = os.path.join(os.path.dirname(__file__),'templates')
 settings.configure(TEMPLATE_DIRS = (TEMPLATE_DIR,'') )
 
 # Define page id for top-level page (i.t. Home page)
-def get_home_id():
+def get_home_id(handler):
     try:
         return PageModel.gql("WHERE is_home=true")[0].key().id()
     except:
@@ -87,7 +87,7 @@ def authorize():
 def get_requested_page_id(handler):
     s = handler.request.path
     if s.endswith('/'): 
-        return get_home_id()
+        return get_home_id(handler)
     last = s.split('/')[-1]
     if last.isdigit():
         try:
@@ -149,10 +149,10 @@ class CreateHandler(webapp.RequestHandler):
                                 url = 'untitled',
                                 content = 'No content yet.',
                                 template = 'default.htm',
-                                position = get_appropriate_position(PageModel.get_by_id(get_home_id()).key()),
+                                position = get_appropriate_position(PageModel.get_by_id(get_home_id(self)).key()),
                                 hidden=True, 
                                 allow_comments=True, 
-                                reference=PageModel.get_by_id(get_home_id()),
+                                reference=PageModel.get_by_id(get_home_id(self)),
                                 is_home=False)
             new_page.put()
             self.redirect('/edit/'+str(new_page.key().id()))
@@ -243,7 +243,7 @@ class MainHandler(webapp.RequestHandler):
                     
         CP = PageModel.get_by_id(page_id)
         
-        L0 = PageModel.get_by_id(get_home_id())    
+        L0 = PageModel.get_by_id(get_home_id(self))    
         
                 
         if authorize():
@@ -291,7 +291,7 @@ class EditHandler(webapp.RequestHandler):
             if page_id is None: return # error 404
             
             CP = PageModel.get_by_id(page_id)
-            L0 = PageModel.get_by_id(get_home_id())
+            L0 = PageModel.get_by_id(get_home_id(self))
             L1 = PageModel.gql("WHERE reference = :ref ORDER BY position", ref = L0.key())
             L2 = []
             for i,n in enumerate(L1):
