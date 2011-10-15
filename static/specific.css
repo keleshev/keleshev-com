@@ -1,10 +1,12 @@
 body {
-    background: #eeeeee; ffffd2;/*#e9e9ff;*/
+    /*kbackground: #eeeeee; ffffd2;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#ffffff));
     background-image: -moz-linear-gradient(top,  #eeeeee,  #ffffff);
     background-repeat: repeat-x;
     background-attachment: fixed;
-    1background:#ffffff;
+    1background:#ffffff;*/
+
+    background-color: #cadfed;
 }
 
 /* Main */
@@ -108,11 +110,13 @@ hr.blog-post-separators {
 .paper {
     background:White; 
     padding:4em;
-    border: 1px solid #cba;
-    
+    /*border: 1px solid #cba;
     -moz-box-shadow: 0px 0px 2px #444;
     -webkit-box-shadow: 0px 0px 2px #444;
-    box-shadow: 0px 0px 2px #444;
+    box-shadow: 0px 0px 2px #444;*/
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }    
     
 .negated {
