@@ -1,0 +1,278 @@
+body, pre {
+    font-family: Verdana, Geneva, sans-serif;
+    font-family: Lucida Grande, Verdana, sans-serif;
+    font-size: 1em;
+    margin: 0;
+    line-height: 1.5;
+    word-wrap: break-word;
+    background-color: #cadfed;
+}
+
+
+img {
+    border-style: none;
+}
+
+hr {
+    padding: 0;
+    margin: 0 0 -1px 0;
+    border: 0;
+    color: Grey;
+    background-color: Grey;
+    height: 1px;
+}
+
+a:link, a:visited {
+    color: #253eab;
+    darkblue;
+}
+
+a:hover, a:focus {
+    color: brown; #253eab;
+    mediumblue;
+    text-decoration: none;
+}
+
+.block {
+    ;
+}
+
+#block-logo {
+    text-align:center;
+}
+
+#block-L1-menu {
+    text-align:center;
+    font-size: 1.5em;
+}
+
+.L1-menu-item {
+    padding-left:0.225em;
+    padding-right:0.225em;
+    1margin:0;
+    1word-spacing:2em;
+}
+
+#block-L2-menu {
+    width: 854px;
+    700px;
+    margin: 0 auto;
+}
+
+#block-content {
+    clear: both;
+    width: 854px;
+    700px;
+    margin: 0 auto;
+    margin-top:1.25em;
+}
+
+#block-comments{
+    width: 854px;
+    700px;
+    margin: 0 auto;
+}
+
+#block-footer {
+    text-align:center;
+    font-style:italic;
+    padding: 0.25em 0em 0.25em 0em;
+}
+
+li {
+    padding-left: 0.25em;
+}
+
+h1, h2 {
+    margin: 0.75em 0em 0.75em 0em;
+    padding: 0em;
+    font-weight:normal;
+}
+
+input.title {
+    margin: 0.5em 0em 0.5em 0em;
+    padding: 0em;
+    font-family: verdana, sans-serif;
+    font-size: 1.5em;
+}
+
+input, select, option, textarea {
+    margin: 0.0em 0em 0.0em 0em;
+    padding: 0px;
+    1em;
+    1line-height: 1.5;
+    font-family: verdana, sans-serif;
+    font-size: 1.0em;
+}
+
+textarea {
+    line-height: 1.5;
+    width:100%;
+}
+
+form {
+    text-align:ce1nter;
+}
+
+#user {
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    font-style:italic;
+}
+
+#user-name-input {
+    font-style:italic;
+}
+
+#comment {
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    background-color:#fff;
+    border:1px solid grey;
+}
+
+#comment-registered {
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    background-color:#e6e6e6;
+    border:1px solid grey;
+}
+
+#post-comment {
+    ;
+}
+
+#date {
+    color: #cccccc;
+}
+
+#edit {
+    position:absolute;
+    top: 0.25em;
+    right: 0.5em;
+}
+
+#logout {
+    position:absolute;
+    top: 0.25em;
+    left: 0.5em;
+}
+
+#1authorized_controls {
+    line-height: 1.9em;
+    position:absolute;
+    top: 0.25em;
+    right: 0.5em;
+    text-align:right;
+}
+
+a.hidden {
+    color:darkgrey;
+}
+
+.hidden {
+    color:darkgrey;
+}
+
+.hidden a {
+    color:darkgrey;
+}
+
+#block-logo {
+    display: none;
+}
+
+#L1-selected {
+    color: white;
+    background-color: #253eab;
+    padding: 0.2em 0.5em 0.25em 0.5em;
+    -webkit-border-bottom-right-radius: 12px;
+    -webkit-border-bottom-left-radius: 12px;
+    -moz-border-radius-bottomright: 12px;
+    -moz-border-radius-bottomleft: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+#L1-selected a {
+    color: white;
+}
+
+#selected {
+    color:white;
+    margin-left:-0.5em;
+    padding: 0.15em 0.5em 0.15em 0.5em;
+    background-color: #253eab;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+#selected a {
+    color: white;
+}
+
+#block-L2-menu {
+    margin-top: 1.5em;
+}
+
+#block-content {
+    margin-top: 0em;
+}
+
+#block-footer {
+    display:none;
+}
+
+.youtube-frame {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    -moz-box-shadow: 0px 0px 3px #444;
+    -webkit-box-shadow: 0px 0px 3px #444;
+    box-shadow: 0px 0px 3px #444;
+}
+
+table {
+    background: White;
+    border-style:none;
+    border-collapse:collapse;
+    -moz-box-shadow: 0px 0px 2px #444;
+    -webkit-box-shadow: 0px 0px 2px #444;
+    box-shadow: 0px 0px 2px #444;
+}
+
+td, tr {
+    padding:0.5em 1em;
+    border: 1px solid #abc;
+    border-bottom: 1px solid #cba;
+}
+
+hr {
+    display:none;
+}
+
+hr.blog-post-separators {
+    display:block;
+    border: solod 1px #cba;
+    margin: 0.5em 0;
+    height: 2px;
+}
+
+.paper {
+    background:White;
+    padding:4em;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.negated {
+    border-top: 2px solid;
+}
+
+.negated2 {
+    border-top: 6px double;
+}
+
+ul {
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+
