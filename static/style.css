@@ -5,9 +5,11 @@ body, pre {
     margin: 0;
     line-height: 1.5;
     word-wrap: break-word;
-    background-color: #cadfed;
 }
 
+body {
+    background-color: #cadfed;
+}
 
 img {
     border-style: none;

@@ -33,6 +33,7 @@ def get_home_id(handler):
         render_page(handler,"_login.htm",{'error': 'No main page, <a href="/setup/">create main page</a>?'})
 
 def render_page(handler, template_name = 'default.htm', values = { }):
+    values['site_name'] = AdminModel().all()[0].login
     output = render_to_string(template_name,values)
     handler.response.out.write(output)
     
