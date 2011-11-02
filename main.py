@@ -1,4 +1,5 @@
 import os, Cookie, sys, hashlib
+from markdown2 import markdown
 
 # Google App Engine imports.
 import wsgiref.handlers
@@ -41,6 +42,7 @@ class PageModel(db.Model):
     title = db.StringProperty()
     url =  db.StringProperty()
     content = db.TextProperty()
+    markup = db.StringProperty()
     reference = db.SelfReferenceProperty()
     created = db.DateTimeProperty(auto_now_add = True)
     modified = db.DateTimeProperty(auto_now = True)
@@ -52,7 +54,7 @@ class PageModel(db.Model):
     comments_number = 0 
     #historical = db.BooleanProperty()
     #user = db.UserProperty(auto_current_user = True)    
-    type = db.StringProperty()
+#    type = db.StringProperty()
     
 class CommentModel(db.Model):
     content = db.TextProperty()
@@ -62,8 +64,8 @@ class CommentModel(db.Model):
     registered = db.BooleanProperty()
     
 class AdminModel(db.Model):
-    login = db.TextProperty()
-    password_sha1 = db.TextProperty()
+    login = db.StringProperty()
+    password_sha1 = db.StringProperty()
 
 
 def set_cookie(handler, key, value):
@@ -310,7 +312,8 @@ class EditHandler(webapp.RequestHandler):
             page.title = self.request.get('title')
             page.url = self.request.get('url') 
             page.content = self.request.get('content')
-            page.type = self.request.get('type')
+            #page.type = self.request.get('type')
+            page.markup = self.request.get('markup')
             #page.position = int(self.request.get('position'))
             page.template = self.request.get('template')
             if ".htm" not in page.template: 
@@ -349,7 +352,7 @@ class EditHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([
-        ('/create_page', CreateHandler),
+        ('/create', CreateHandler),
         ('/setup/.*', SetupHandler),
         ('/login', LoginHandler),
         ('/logout', LogoutHandler),

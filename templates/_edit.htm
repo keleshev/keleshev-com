@@ -31,6 +31,15 @@
     
         Template: <input type="text" name="template" value="{{ CP.template }}"/><br/>
         Position in menu: <input type="text" name="position" value="{{ CP.position }}"/> <br/>
+        <select size="1" name="markup">
+            <option {% if CP.markup != 'markdown' %} selected {% endif %} value="html">
+                html
+            </option>
+            <option {% if CP.markup == 'markdown' %} selected {% endif %} value="markdown">
+                markdown
+            </option>
+
+        </select>      <br>
         <!--input type="radio" name="type" value="HTML" checked /> HTML <input type="radio" name="type" value="Text"/> Text <br/><br/-->
         
         <label for="hidden">Hide this page: </label>
@@ -52,9 +61,10 @@
         
         <br/>
         <input style="padding:0.25em 1em;" type="submit" value="Apply changes"/> or 
-        <input type="submit" value="Delete this page" onclick="window.location='/delete/{{ CP.url }}'; return false;"/>
+        <a href='/delete/{{ CP.url }}'>delete this page</a>
+        <!--input type="submit" value="Delete this page" onclick="window.location='/delete/{{ CP.url }}'; return false;"/>
         or
-        <input type="submit" value="Create new page" onclick="window.location='/create_page'; return false;"/>
+        <input type="submit" value="Create new page" onclick="window.location='/create_page'; return false;"/-->
         
         </center>
         {# if authorize #} 

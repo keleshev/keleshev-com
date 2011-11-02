@@ -1,10 +1,17 @@
 import urllib
+from markdown2 import markdown
 from google.appengine.api import urlfetch
 from django import template
 from django.template.defaultfilters import stringfilter
 #from django.template import register
 from string import Template
 register = template.Library()
+
+@register.filter
+@stringfilter
+def custom_markdown(markup):
+    extras = 'smarty-pants, markdown-in-html, code-friendly, cuddled-lists, wiki-tables'.split(', ')
+    return markdown(markup, extras=extras)
 
 @register.filter
 @stringfilter

@@ -86,7 +86,8 @@ li {
 }
 
 h1, h2 {
-    margin: 0.75em 0em 0.75em 0em;
+    1margin: 0em 0em 0.75em 0em;
+    1margin-top: 0;
     padding: 0em;
     font-weight:normal;
 }
@@ -108,6 +109,7 @@ input, select, option, textarea {
 }
 
 textarea {
+    font-family: Menlo, Monaco, Monospace;
     line-height: 1.5;
     width:100%;
 }
@@ -145,24 +147,16 @@ form {
     color: #cccccc;
 }
 
-#edit {
+#authorized_controls {
     position:absolute;
     top: 0.25em;
     right: 0.5em;
 }
 
-#logout {
+#create {
     position:absolute;
-    top: 0.25em;
-    left: 0.5em;
-}
-
-#1authorized_controls {
-    line-height: 1.9em;
-    position:absolute;
-    top: 0.25em;
+    top: 1.75em;
     right: 0.5em;
-    text-align:right;
 }
 
 a.hidden {
@@ -259,11 +253,12 @@ hr.blog-post-separators {
 
 .paper {
     background:White;
-    padding:4em;
+    padding: 2em 4em 4em 4em;
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 
 .negated {
     border-top: 2px solid;

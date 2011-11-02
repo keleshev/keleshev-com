@@ -3,8 +3,9 @@
 
 {% if authorize %} 
     <span id="authorized_controls">
-        <a id="edit" class="hidden" href="edit/{{ CP.url }}">edit page</a> 
-        <a id="logout" class="hidden" href="logout">logout</a> 
+        <a class="hidden" href="edit/{{ CP.url }}">edit page</a> |
+        <a class="hidden" href="create">create page</a> | 
+        <a class="hidden" href="logout">logout</a> 
     </span>
 {% endif %}
 
@@ -59,7 +60,12 @@
     <!--{# if CP.key == L0.key #}!!!{# else #}<h2>{{ CP.title }}</h2>{# endif #}-->
     
     {% load custom_tags %}
-    {{ CP.content|fix_ampersands|custom_youtube|custom_googledocs }}
+    {% if CP.markup == 'markdown' %}
+        {{ CP.content|fix_ampersands|custom_markdown|custom_youtube }}
+    {% else %}
+        {{ CP.content|fix_ampersands|custom_youtube }}
+    {% endif %}
+    {# CP.content|fix_ampersands|custom_youtube|custom_googledocs #}
     
     
 </div>
